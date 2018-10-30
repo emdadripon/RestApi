@@ -1,26 +1,18 @@
 pipeline{
    agent any
       stages{
-         stage('Complie Stage'){
+         stage('Build'){
              steps{
                 withMaven(maven : 'loalMaven'){
-                     sh 'mvn clean complie'
+                     sh 'mvn clean package'
                }
-            }
-         }
-         stage('Testing Stage'){
-              steps{
-                withMaven(maven : 'loalMaven'){
-                     sh 'mvn test'
+               post{
+                   success{
+                       echo "Now Archiving..."
+                       archiveArtifacts artifacts: '**/target/*.war'
+                   }
                }
-            }
+             }
+
          }
-         stage('Deployment Stage'){
-               steps{
-                withMaven(maven : 'loalMaven'){
-                     sh 'mvn deploy'
-                      }
-                }
-           }
-      }
 }
