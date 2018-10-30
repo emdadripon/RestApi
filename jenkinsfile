@@ -1,0 +1,26 @@
+pipeline{
+   agent any
+      stages{
+         stage('Complie Stage'){
+             steps{
+                withMaven(maven : 'loalMaven'){
+                     sh 'mvn clean complie'
+               }
+            }
+         }
+         stage('Testing Stage'){
+              steps{
+                withMaven(maven : 'loalMaven'){
+                     sh 'mvn test'
+               }
+            }
+         }
+         stage('Deployment Stage'){
+               steps{
+                withMaven(maven : 'loalMaven'){
+                     sh 'mvn deploy'
+                      }
+                }
+           }
+      }
+}
